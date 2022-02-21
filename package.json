@@ -1,0 +1,70 @@
+{
+    "name": "cooking-tools",
+    "version": "0.0.1",
+    "description": "my program for differnt \"cooking\" tools",
+    "main": "dist/index.js",
+    "author": "Carter Himmel",
+    "license": "UNLICENSED",
+    "dependencies": {
+        "@naval-base/ms": "^3.1.0",
+        "@types/dotenv": "^8.2.0",
+        "@types/node-emoji": "^1.8.1",
+        "@types/twit": "^2.2.23",
+        "canvas": "^2.6.1",
+        "common-tags": "^1.8.0",
+        "discord-akairo": "^8.0.0-beta.8",
+        "discord.js": "github:discordjs/discord.js",
+        "mongoose": "^5.8.7",
+        "node-emoji": "^1.10.0",
+        "node-fetch": "^2.6.0",
+        "node-superfetch": "^0.1.9",
+        "request": "^2.88.0",
+        "request-promise": "^4.2.4",
+        "twit": "^2.2.11",
+        "winston": "^3.2.1"
+    },
+    "devDependencies": {
+        "@types/common-tags": "^1.8.0",
+        "@types/mongoose": "^5.5.41",
+        "@types/ms": "^0.7.31",
+        "@types/node": "^13.1.6",
+        "@types/node-fetch": "^2.5.7",
+        "@types/request-promise": "^4.1.45",
+        "@types/ws": "^6.0.4",
+        "@typescript-eslint/eslint-plugin": "^2.15.0",
+        "@typescript-eslint/parser": "^2.15.0",
+        "depcheck": "^0.9.2",
+        "dotenv": "^8.2.0",
+        "eslint": "^6.8.0",
+        "eslint-config-marine": "^5.3.2",
+        "eslint-config-prettier": "^6.9.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "prettier": "^1.19.1",
+        "rimraf": "^3.0.0",
+        "typescript": "^3.7.4"
+    },
+    "optionalDependencies": {
+        "bufferutil": "^4.0.1",
+        "utf-8-validate": "^5.0.2",
+        "zlib-sync": "^0.1.6"
+    },
+    "scripts": {
+        "lint": "eslint src --ext .ts",
+        "lint:fix": "eslint src --fix --ext .ts",
+        "cleardir": "rimraf dist/*",
+        "compile": "tsc",
+        "build": "yarn run cleardir && yarn run compile",
+        "start": "yarn run dist && node ."
+    },
+    "keywords": [],
+    "eslintConfig": {
+        "extends": "marine/prettier/node",
+        "rules": {
+            "comma-dangle": [
+                "error",
+                "always-multiline"
+            ],
+            "@typescript-eslint/no-unnecessary-type-arguments": "off"
+        }
+    }
+}
