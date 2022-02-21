@@ -5,7 +5,7 @@ On February 19th, 2022, Sycer Development [announced](https://twitter.com/Fykowo
 This repository is home to four (4) of our now retired services on separate branches:
 - [Toolkit](https://github.com/sycer-dev/archive/tree/toolkit)
 - [Carts Distribution](https://github.com/sycer-dev/archive/tree/carts)
-- [SMS Next](https://github.com/sycer-dev/archive/tree/sms)*
+- [SMS](https://github.com/sycer-dev/archive/tree/sms)
 - [Success Testimonials](https://github.com/sycer-dev/archive/tree/success)*
 - [Hypervisor](https://github.com/sycer-dev/archive/tree/hypervisor)*  
 \*in progress
