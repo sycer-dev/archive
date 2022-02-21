@@ -11,7 +11,7 @@ This repository is home to seven (7) of our now retired services on separate bra
 - [Alerts]()
 - [Pinger]()
 
-In the hopes of *preserving open source software for generations*, I'm making a slew of our services open-source to provide a valuable resource and, hopefully, a source of motivation for future developers.
+In the hopes of [*preserving open source software for generations*](https://archiveprogram.github.com/), I'm making a slew of our services open-source to provide a valuable resource and, hopefully, a source of motivation for future developers.
 
 The above services are provided as-is with zero future maintainance under the MIT license.
 Support will not be provided with self-hosting or updating the projects to current or future dependency versions.
