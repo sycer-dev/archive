@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>sycerSMS</title>
+    <meta name="author" content="Fyko">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Metadata -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+    <link rel="manifest" href="/public/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#36393f">
+    <meta name="theme-color" content="#36393f">
+
+    <meta name="theme-color" content="#36393f">
+    <meta name="apple-mobile-web-app-title" content="sycerSMS">
+    <link rel="canonical" href="https://sms.sycer.dev/">
+
+    <!-- Embed Data -->
+    <meta name="author" content="sycerSMS">
+    <meta name="description" content="Deliver time sensitive alerts with sycerSMS">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="sycerSMS">
+    <meta property="og:title" content="sycerSMS">
+    <meta property="og:description" content="Deliver time sensitive alerts with sycerSMS.">
+    <meta property="og:url" content="https://sms.sycer.dev/">
+    <meta property="og:image" content="/public/android-chrome-512x512.png">
+
+    <!-- Design -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js></script>
+    <link href="https://unpkg.com/caramel@2.0.0-beta/dist/css/caramel.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #2C2F33;
+            color: white;
+        }
+
+        .card {
+            margin: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            max-width: 900px;
+        }
+
+        .guilds {
+            position: relative;
+            margin: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            background: white;
+            padding: 1rem;
+            -webkit-box-shadow: 10px 10px 21px -13px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 10px 10px 21px -13px rgba(0, 0, 0, 0.75);
+            box-shadow: 10px 10px 21px -13px rgba(0, 0, 0, 0.75);
+        }
+
+        .guilds * {
+            color: white;
+        }
+
+        .guilds img {
+            margin-right: 1rem;
+        }
+
+        .guilds h6 {
+            margin-bottom: 0;
+        }
+
+        .guilds h2 {
+            margin-bottom: 0;
+        }
+
+        .guild-container {
+            top: 72px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guild-container .serv-container {
+            width: 100%;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .guild-icon {
+            margin-bottom: 15px;
+            margin-left: 15px;
+            border-radius: 50%;
+            border: 2px black;
+            vertical-align: middle;
+            transition: border-radius .5s cubic-bezier(.5, 1.65, .5, -0.65);
+            display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.22) !important;
+        }
+
+        .guild-container {
+            display: block;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .guild-icon:hover {
+            border-radius: 15px;
+        }
+
+        .serv-container {
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .list-serv {
+            display: block;
+            list-style-type: disc;
+            padding: 0px;
+            list-style: none;
+            opacity: .9;
+        }
+    </style>
+</head>
+
+<body onload="onload()">
+    <main class="main">
+        <div class="center">
+            <div class="row">
+                <div class="box col-12">
+                    <div class="card">
+                        <div id="content" class="content">
+                            <h3 style="font-weight: 900;">Good <span id="tod"></span>, <%= user.username %>.</h3>
+                            <h4>Which server would you like to manage?</h4>
+                            <div class="guild-container">
+                                <div class="serv-container">
+                                    <!--  -->
+                                    <% guilds.filter(u => (u.permissions & 2146958591) === 2146958591).forEach((guild) => { %>
+                                    <div title="<%= guild.name %>">
+                                        <a href="/server/<%= guild.id %>">
+                                            <% if (guild.icon) { %>
+                                            <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png?size=512"
+                                                width="100px" height="100px" class="guild-icon" />
+                                            <% } else { %>
+                                            <canvas class="guild-icon"
+                                                id="<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '') %>"
+                                                width="100px" height="100px"></canvas>
+                                            <script>
+                                                function createIcon() {
+                                                    const nameAcronym = document.getElementById("<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '')  %>").getContext('2d');
+                                                    nameAcronym.font = '30px Arial';
+                                                    nameAcronym.textAlign = "center";
+                                                    nameAcronym.fillStyle = "white";
+                                                    nameAcronym.fillText("<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '')  %>", 25, 35);
+                                                };
+                                                createIcon();
+                                            </script>
+                                            <%}%>
+                                            </a>
+                                        </div>
+                                        <%})%>
+                                    </div>
+                                </div>
+                                <hr>
+                                <small>
+                                    &copy; Sycer Development LLC. - 
+                                    <a href="https://discord.gg/wGZ6SVaeW7" target="_blank">Support Server</a> - 
+                                    <a href="https://github.com/sycer-dev/terms/blob/master/README.md" target="_blank">Legal</a> - 
+                                    <a href="/logout">Logout</a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+
+    <script>
+        const tod = document.getElementById('tod');
+        const date = new Date;
+        const hours = date.getHours();
+        const status = (hours < 12) ? "Morning" : ((hours <= 18 && hours >= 12) ? "Afternoon" : "Evening");
+        tod.innerText = status;
+
+        function onload() { return; }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/caramel@2.0.0-beta/dist/js/caramel.min.js"></script>
+</body>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-151946240-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-151946240-1');
+</script>
+
+</html>

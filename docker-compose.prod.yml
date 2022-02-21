@@ -1,0 +1,32 @@
+version: '2.4'
+
+services:
+  bot:
+    build:
+      context: .
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    volumes:
+      - ./views:/usr/sms-next/views
+    ports:
+      - 4317:4317
+    expose:
+      - 4317
+
+  redis:
+    image: redis:5-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    expose: 
+      - '6379'
+    ports: 
+      - '6379:6379'
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+
+volumes:
+  redis_data:

@@ -1,0 +1,19 @@
+[{
+    "name": "default",
+    "type": "postgres",
+    "host": "postgres",
+    "port": 5432,
+    "username": "fyko",
+    "password": "doctordoctor",
+    "database": "sms-next",
+    "synchronize": true,
+    "logging": true,
+    "entities": [
+        "dist/database/entities/*.*"
+    ],
+    "cache": {
+		"type": "ioredis",
+		"options": "redis://redis:6379/",
+		"duration": 600000
+	}
+}]

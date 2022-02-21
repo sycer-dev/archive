@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>sycerSMS</title>
+    <meta name="author" content="Fyko">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="REFRESH" content="3; url=/">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Metadata -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
+    <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#36393f">
+    <meta name="msapplication-TileColor" content="#36393f">
+    <meta name="theme-color" content="#36393f">
+
+    <meta name="theme-color" content="#36393f">
+    <meta name="apple-mobile-web-app-title" content="StockX GIF">
+    <link rel="canonical" href="https://fyko.github.io/stockx-gif/">
+
+    <!-- Embed Data -->
+    <meta name="author" content="StockX GIF">
+    <meta name="description" content="a tool to create gifs from StockX 360º product views">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="StockX GIF">
+    <meta property="og:title" content="StockX GIF">
+    <meta property="og:description" content="a tool to create gifs from StockX 360º product views">
+    <meta property="og:url" content="https://fyko.github.io/stockx-gif/">
+    <meta property="og:image" content="/assets/android-chrome-512x512.png">
+
+    <!-- Design -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js></script>
+    <link href="https://unpkg.com/caramel@2.0.0-beta/dist/css/caramel.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #2C2F33;
+            color: white;
+        }
+
+        .card {
+            margin: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            max-width: 900px;
+        }
+    </style>
+</head>
+
+<body onload="onload()">
+    <main class="main">
+        <div class="center">
+            <div class="row">
+                <div class="box col-12">
+                    <div class="card">
+                        <div id="content" class="content">
+                            <h3 style="font-weight: 900;">An Error Occurred</h3>
+                            <h5><%= message %></h5>
+                            <hr>
+                            <small>
+                                &copy; Sycer Development LLC. - 
+                                <a href="https://discord.gg/wGZ6SVaeW7" target="_blank">Support Server</a> - 
+                                <a href="https://github.com/sycer-dev/terms/blob/master/README.md" target="_blank">Legal</a> - 
+                                <a href="/logout">Logout</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/caramel@2.0.0-beta/dist/js/caramel.min.js"></script>
+</body>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-151946240-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-151946240-1');
+</script>
+
+</html>

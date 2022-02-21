@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>sycerSMS</title>
+	<meta name="author" content="Fyko">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+	<!-- Metadata -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+	<link rel="manifest" href="/public/site.webmanifest">
+	<meta name="msapplication-TileColor" content="#36393f">
+	<meta name="theme-color" content="#36393f">
+
+	<meta name="theme-color" content="#36393f">
+	<meta name="apple-mobile-web-app-title" content="sycerSMS">
+	<link rel="canonical" href="https://sms.sycer.dev/">
+
+	<!-- Embed Data -->
+	<meta name="author" content="sycerSMS">
+	<meta name="description" content="Deliver time sensitive alerts with sycerSMS">
+
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="sycerSMS">
+	<meta property="og:title" content="sycerSMS">
+	<meta property="og:description" content="Deliver time sensitive alerts with sycerSMS.">
+	<meta property="og:url" content="https://sms.sycer.dev/">
+	<meta property="og:image" content="/public/android-chrome-512x512.png">
+
+	<!-- Design -->
+	<script src="https://js.stripe.com/v3"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js></script>
+	<link href="https://unpkg.com/caramel@2.0.0-beta/dist/css/caramel.min.css" rel="stylesheet">
+	<script src="/public/sweetalert.min.js"></script>
+	<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+
+	<style>
+		body {
+			background-color: #2C2F33;
+			color: white;
+		}
+
+		.card {
+			margin: 1rem;
+			margin-bottom: 1rem;
+			padding: 1rem;
+			max-width: 900px;
+		}
+
+		.textbox {
+			background-color: #34354A;
+			color: #6C6E92;
+			width: 300px;
+		}
+	</style>
+</head>
+
+<body onload="onload()">
+	<main class="main">
+		<div class="center">
+			<div class="row">
+				<div class="box col-12">
+					<div class="card">
+						<div id="content" class="content">
+							<h3 style="font-weight: 900;">Hello <%= user.tag %></h3>
+							<p>Please input your full phone number including the country code<br>Example: +1 800 520
+								1027.</p>
+							<label for="number" style="font-weight: bold; text-align: left;">Phone Number</label><br>
+							<input class="textbox" type="tel" id="number" name="number" value=""><br>
+							<button class="dark" id="submit-number" onclick="submitNumber()"
+								style="background-color: #9400D3;">
+								<i class="fas fa-paper-plane"></i> Request Verification Code
+							</button>
+							<br>
+							<label for="code" style="font-weight: bold; text-align: left;">Verification Code</label><br>
+							<input class="textbox" type="tel" id="code" name="code" value="" disabled="true"
+								autocomplete="off"><br>
+
+							<button disabled="true" autocomplete="off" class="dark" id="submit-code"
+								onclick="submitCode()" style="background-color: #008315;">
+								<i class="fas fa-user-check"></i> Submit Verification Code
+							</button>
+
+							<hr>
+							<small>
+								&copy; Sycer Development LLC. -
+								<a href="https://discord.gg/wGZ6SVaeW7" target="_blank">Support Server</a> -
+								<a href="https://github.com/sycer-dev/terms/blob/master/README.md"
+									target="_blank">Legal</a>
+							</small>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<script src="https://unpkg.com/caramel@2.0.0-beta/dist/js/caramel.min.js"></script>
+
+	<script>
+		const codeTextbox = document.getElementById('code');
+		const codeButton = document.getElementById('submit-code');
+		var id = '';
+
+		async function submitCode() {
+			if (codeTextbox.value.length !== 6) {
+				return swal({ icon: 'error', text: 'Invalid verification code. Length must be 6.' });
+			}
+
+			codeButton.disabled = true;
+			codeButton.autocomplete = 'off';
+			codeButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submit Verification Code';
+
+			function unlock() {
+				codeButton.disabled = false;
+				codeButton.autocomplete = '';
+				codeButton.innerHTML = '<i class="fas fa-user-check"></i> Submit Verification Code';
+			}
+
+			const res = await fetch(`/api/onboarding/submit?key=<%= key %>`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ code: codeTextbox.value, id })
+			});
+
+			const json = await res.json();
+
+			if (json.type === 'error') {
+				unlock();
+				return swal({
+					icon: 'error',
+					title: 'An error occurred!',
+					text: json.message,
+				});
+			}
+
+			return swal({ icon: 'success', title: 'Verification complete!', text: 'You can close this page now.' });
+		}
+
+		async function submitNumber() {
+			const number = document.getElementById('number').value;
+			if (number.length <= 5) {
+				return swal({
+					icon: 'error',
+					text: 'Please input a valid phone number.',
+				});
+			}
+
+			const button = document.getElementById('submit-number');
+			button.disabled = true;
+			button.autocomplete = 'off';
+			button.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Request Verification Code';
+
+			function unlock() {
+				button.disabled = false;
+				button.autocomplete = '';
+				button.innerHTML = '<i class="fas fa-paper-plane"></i> Request Verification Code';
+			}
+
+			const res = await fetch(`/api/onboarding/start?key=<%= key %>`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ number })
+			});
+			const json = await res.json();
+
+			if (json.type === 'error') {
+				unlock();
+				return swal({
+					icon: 'error',
+					title: 'An error occurred!',
+					text: json.message,
+				});
+			}
+
+			if (res.status === 200) {
+				id = json.id;
+				swal({ text: 'Successfully sent a verification code.' });
+
+				codeButton.disabled = false;
+				codeButton.autocomplete = '';
+
+				codeTextbox.disabled = false;
+				codeTextbox.autocomplete = '';
+			}
+		}
+	</script>
+</body>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-151946240-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-151946240-1');
+</script>
+
+</html>
